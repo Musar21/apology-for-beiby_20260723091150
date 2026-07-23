@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Beiby 💔</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            background: #0a0a1a;
+            min-height: 100vh;
+        }
+
+        /* Floating Hearts Background */
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0;
+            animation: floatUp 6s ease-in infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Screen System */
+        .screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            z-index: 10;
+        }
+
+        .screen.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Screen 1: Opening */
+        #screen-1 {
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0a0a1a 100%);
+        }
+
+        .envelope-container {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .envelope-container:hover {
+            transform: scale(1.05);
+        }
+
+        .envelope {
+            width: 200px;
+            height: 150px;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(255, 107, 157, 0.3);
+        }
+
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-top: 80px solid #e84393;
+        }
+
+        .envelope::after {
+            content: '💌';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40px;
+        }
+
+        .envelope-text {
+            color: white;
+            font-family: 'Dancing Script', cursive;
+            font-size: 28px;
+            margin-top: 30px;
+            text-align: center;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .click-hint {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            margin-top: 15px;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        /* Screen 2: The Apology */
+        #screen-2 {
+            background: linear-gradient(180deg, #0a0a1a 0%, #1a0a2e 100%);
+        }
+
+        .apology-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 107, 157, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .apology-card h2 {
+            font-family: 'Dancing Script', cursive;
+            color: #ff6b9d;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .apology-card p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .apology-card .highlight {
+            color: #ff6b9d;
+            font-weight: 600;
+        }
+
+        .apology-card .heart-divider {
+            font-size: 30px;
+            margin: 25px 0;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        /* Screen 3: Our Photos */
+        #screen-3 {
+            background: linear-gradient(180deg, #0a0a1a 0%, #1a0a2e 100%);
+        }
+
+        .photos-container {
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .photos-container h2 {
+            font-family: 'Dancing Script', cursive;
+            color: #ff6b9d;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .photos-container .subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .photo-card {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translateY(30px) scale(0.9);
+            transition: all 0.6s ease;
+            cursor: pointer;
+            aspect-ratio: 1;
+        }
+
+        .photo-card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .photo-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.3);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo-card .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 15px 15px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            font-size: 14px;
+            font-style: italic;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .photo-card:hover .photo-overlay {
+            opacity: 1;
+        }
+
+        .photo-card.featured {
+            grid-column: span 2;
+            aspect-ratio: 16/9;
+        }
+
+        /* Screen 4: Memories */
+        #screen-4 {
+            background: linear-gradient(180deg, #0a0a1a 0%, #1a0a2e 100%);
+        }
+
+        .memories-container {
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .memories-container h2 {
+            font-family: 'Dancing Script', cursive;
+            color: #ff6b9d;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        .memory-timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .memory-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #ff6b9d, #c44569, #ff6b9d);
+        }
+
+        .memory-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 107, 157, 0.2);
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.6s ease;
+        }
+
+        .memory-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .memory-item::before {
+            content: '💕';
+            position: absolute;
+            left: -38px;
+            top: 20px;
+            font-size: 18px;
+        }
+
+        .memory-item .date {
+            color: #ff6b9d;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .memory-item .text {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Screen 5: The Promise */
+        #screen-5 {
+            background: linear-gradient(180deg, #0a0a1a 0%, #1a0a2e 100%);
+        }
+
+        .promise-container {
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .promise-container h2 {
+            font-family: 'Dancing Script', cursive;
+            color: #ff6b9d;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        .promise-list {
+            list-style: none;
+            text-align: left;
+        }
+
+        .promise-list li {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            background: rgba(255, 107, 157, 0.1);
+            border-radius: 12px;
+            border-left: 3px solid #ff6b9d;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .promise-list li.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .promise-list li::before {
+            content: '🤞 ';
+        }
+
+        /* Music Section */
+        .music-container {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(255, 107, 157, 0.1);
+            border: 1px solid rgba(255, 107, 157, 0.3);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .music-container h3 {
+            font-family: 'Dancing Script', cursive;
+            color: #ff6b9d;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .music-container p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .music-player {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .music-player iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .music-note {
+            display: inline-block;
+            animation: musicFloat 2s ease-in-out infinite;
+        }
+
+        @keyframes musicFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Reading Timer */
+        .reading-timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 107, 157, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 107, 157, 0.4);
+            border-radius: 50px;
+            padding: 10px 20px;
+            color: #ff6b9d;
+            font-size: 14px;
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reading-timer.active {
+            display: flex;
+        }
+
+        .reading-timer .timer-icon {
+            font-size: 18px;
+        }
+
+        .reading-timer .timer-text {
+            font-weight: 600;
+        }
+
+        /* Screen 6: The Question */
+        #screen-6 {
+            background: linear-gradient(180deg, #0a0a1a 0%, #1a0a2e 50%, #0a0a1a 100%);
+        }
+
+        .final-container {
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .final-container h2 {
+            font-family: 'Dancing Script', cursive;
+            color: #ff6b9d;
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .final-container .subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+
+        .final-container .question {
+            color: white;
+            font-size: 22px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-yes:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.6);
+        }
+
+        .btn-no {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        /* Screen 7: Celebration */
+        #screen-7 {
+            background: linear-gradient(180deg, #0a0a1a 0%, #1a0a2e 100%);
+        }
+
+        .celebration-container {
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .celebration-container .big-heart {
+            font-size: 100px;
+            animation: heartBeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.15); }
+        }
+
+        .celebration-container h2 {
+            font-family: 'Dancing Script', cursive;
+            color: #ff6b9d;
+            font-size: 48px;
+            margin: 20px 0;
+        }
+
+        .celebration-container p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .celebration-container .signature {
+            color: #ff6b9d;
+            font-family: 'Dancing Script', cursive;
+            font-size: 28px;
+            margin-top: 30px;
+        }
+
+        /* Photo Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            cursor: pointer;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        }
+
+        .lightbox .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            z-index: 10001;
+        }
+
+        /* Navigation Buttons */
+        .nav-btn {
+            position: fixed;
+            bottom: 30px;
+            padding: 12px 30px;
+            background: rgba(255, 107, 157, 0.2);
+            border: 1px solid rgba(255, 107, 157, 0.4);
+            color: #ff6b9d;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 107, 157, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.next {
+            right: 30px;
+        }
+
+        .nav-btn.prev {
+            left: 30px;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Confetti */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            animation: confettiFall 3s ease-in forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Scrollable content */
+        .scrollable-content {
+            max-height: 70vh;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .scrollable-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scrollable-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+
+        .scrollable-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 107, 157, 0.4);
+            border-radius: 3px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .apology-card, .memories-container, .promise-container, .final-container, .celebration-container, .photos-container {
+                padding: 20px;
+            }
+
+            .apology-card h2, .memories-container h2, .promise-container h2 {
+                font-size: 28px;
+            }
+
+            .final-container h2 {
+                font-size: 32px;
+            }
+
+            .celebration-container h2 {
+                font-size: 36px;
+            }
+
+            .envelope-text {
+                font-size: 22px;
+            }
+
+            .photos-container h2 {
+                font-size: 28px;
+            }
+
+            .photos-grid {
+                gap: 10px;
+            }
+
+            .photo-card .photo-overlay {
+                opacity: 1;
+                font-size: 12px;
+                padding: 15px 10px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Hearts Background -->
+    <div class="hearts-bg" id="heartsBg"></div>
+
+    <!-- Photo Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <span class="close-btn">&times;</span>
+        <img id="lightboxImg" src="" alt="">
+    </div>
+
+    <!-- Screen 1: Opening -->
+    <div class="screen active" id="screen-1">
+        <div class="envelope-container" onclick="nextScreen()">
+            <div class="envelope"></div>
+            <p class="envelope-text">For You, Beiby 💕</p>
+        </div>
+        <p class="click-hint">Tap to open my heart...</p>
+    </div>
+
+    <!-- Screen 2: The Apology -->
+    <div class="screen" id="screen-2">
+        <div class="scrollable-content">
+            <div class="apology-card">
+                <h2>Dear Beiby 💔</h2>
+                <p>
+                    I know I said things I shouldn't have. When I said I'd choose my game over you — 
+                    <span class="highlight">that was the most hurtful, wrong thing I could ever say</span>. 
+                    And I am so, so sorry.
+                </p>
+                <div class="heart-divider">💔 → 💕</div>
+                <p>
+                    Those words don't reflect who I am or how I feel about you. 
+                    <span class="highlight">You are the most important person in my life</span>, 
+                    and nothing — absolutely nothing — will ever come between us again.
+                </p>
+                <div class="heart-divider">💕</div>
+                <p>
+                    I was wrong, and I own that. I was stupid, and I hurt the person I love most. 
+                    I can't take back those words, but I can promise you that 
+                    <span class="highlight">I will spend every day showing you how wrong I was</span>.
+                </p>
+                <div class="heart-divider">💕</div>
+                <p>
+                    Three weeks without us being good... three weeks of missing you, missing your smile, 
+                    missing the way you make everything better. 
+                    <span class="highlight">I miss you being beside me, Beiby.</span>
+                </p>
+                <div class="heart-divider">💕</div>
+                <p>
+                    I know "sorry" is just a word, but please let it be the start of me showing you 
+                    <span class="highlight">how deeply I regret hurting you</span>. You deserve someone who 
+                    puts you first — always. And I want to be that person for you.
+                </p>
+                <div class="heart-divider">💕</div>
+                <p>
+                    I miss you being beside me, Beiby. I miss your smile, your laugh, the way you make everything better just by being there. 
+                    <span class="highlight">Three weeks without us being good feels like forever.</span>
+                </p>
+                <div class="heart-divider">💕</div>
+                <p>
+                    I'm not asking you to forget what happened. I'm asking for a chance to make it right. 
+                    <span class="highlight">Please give me that chance.</span>
+                </p>
+                
+                <div class="music-container">
+                    <h3><span class="music-note">🎵</span> This song is for you <span class="music-note">🎵</span></h3>
+                    <p>Listen to this and think about us...</p>
+                    <div class="music-player">
+                        <iframe 
+                            src="https://www.youtube.com/embed/Mf718mgHqjs?autoplay=0&start=0" 
+                            title="YouTube music player" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 3: Our Photos -->
+    <div class="screen" id="screen-3">
+        <div class="scrollable-content">
+            <div class="photos-container">
+                <h2>Our Beautiful Moments 📸</h2>
+                <p class="subtitle">Every picture is a memory I'll never forget</p>
+                <div class="photos-grid">
+                    <div class="photo-card" onclick="openLightbox('WhatsApp Image 2026-07-22 at 23.21.28.jpeg')">
+                        <img src="WhatsApp Image 2026-07-22 at 23.21.28.jpeg" alt="Us together" loading="lazy">
+                        <div class="photo-overlay">You and me 💕</div>
+                    </div>
+                    <div class="photo-card" onclick="openLightbox('WhatsApp Image 2026-07-22 at 23.22.00.jpeg')">
+                        <img src="WhatsApp Image 2026-07-22 at 23.22.00.jpeg" alt="Our moment" loading="lazy">
+                        <div class="photo-overlay">My favorite view 🥰</div>
+                    </div>
+                    <div class="photo-card featured" onclick="openLightbox('WhatsApp Image 2026-07-22 at 23.22.50.jpeg')">
+                        <img src="WhatsApp Image 2026-07-22 at 23.22.50.jpeg" alt="Together" loading="lazy">
+                        <div class="photo-overlay">This is what happiness looks like ✨</div>
+                    </div>
+                    <div class="photo-card" onclick="openLightbox('WhatsApp Image 2026-07-22 at 23.23.41.jpeg')">
+                        <img src="WhatsApp Image 2026-07-22 at 23.23.41.jpeg" alt="Us" loading="lazy">
+                        <div class="photo-overlay">I miss this 💕</div>
+                    </div>
+                    <div class="photo-card" onclick="openLightbox('WhatsApp Image 2026-07-22 at 23.24.49.jpeg')">
+                        <img src="WhatsApp Image 2026-07-22 at 23.24.49.jpeg" alt="Beautiful" loading="lazy">
+                        <div class="photo-overlay">My everything 🌟</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 4: Memories -->
+    <div class="screen" id="screen-4">
+        <div class="scrollable-content">
+            <div class="memories-container">
+                <h2>Our Story 💕</h2>
+                <div class="memory-timeline">
+                    <div class="memory-item">
+                        <div class="date">October 2023</div>
+                        <div class="text">The day I met you, Beiby. Everything changed. You walked into my life and made everything brighter. I was so lucky to find you.</div>
+                    </div>
+                    <div class="memory-item">
+                        <div class="date">The First Months</div>
+                        <div class="text">We started our journey together. Every moment with you felt special. You made me feel loved in ways I never knew were possible.</div>
+                    </div>
+                    <div class="memory-item">
+                        <div class="date">Through The Years</div>
+                        <div class="text">We've built so much together — memories, inside jokes, late-night talks, shared dreams. You've been my person through everything.</div>
+                    </div>
+                    <div class="memory-item">
+                        <div class="date">Every Day Since</div>
+                        <div class="text">You've been there for me in ways I can't even count. You've supported me, loved me, and believed in me — even when I didn't deserve it.</div>
+                    </div>
+                    <div class="memory-item">
+                        <div class="date">Right Now</div>
+                        <div class="text">I'm here, broken-hearted, begging for a second chance because I can't imagine my life without you. You're not just my girlfriend — you're my home, my peace, my everything.</div>
+                    </div>
+                    <div class="memory-item">
+                        <div class="date">The Future</div>
+                        <div class="text">I want to keep writing our story. I want to make up for every moment I made you feel less than you are. I want to be the boyfriend you deserve.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 5: My Promises -->
+    <div class="screen" id="screen-5">
+        <div class="scrollable-content">
+            <div class="promise-container">
+                <h2>My Promises To You 🤞</h2>
+                <ul class="promise-list">
+                    <li>You will always come first — before games, before everything</li>
+                    <li>I will think before I speak, and never use words to hurt you again</li>
+                    <li>I will listen to you, really listen, and validate your feelings</li>
+                    <li>I will choose you — every single day, without hesitation</li>
+                    <li>I will be patient when you need space, and present when you need me</li>
+                    <li>I will communicate better and never let frustration turn into hurtful words</li>
+                    <li>I will remind you how much you mean to me, not just when I mess up</li>
+                    <li>I will work on myself so I can be the partner you deserve</li>
+                    <li>I will never take you for granted again</li>
+                    <li>I will spend every day earning back your trust and your smile</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 6: The Question -->
+    <div class="screen" id="screen-6">
+        <div class="final-container">
+            <h2>Beiby... 💕</h2>
+            <p class="subtitle">I know I messed up. I know sorry doesn't fix everything.</p>
+            <p class="question">
+                But I'm begging you — please give me another chance.<br>
+                Let me prove to you that you're worth everything to me.<br><br>
+                <strong>Will you forgive me?</strong>
+            </p>
+            <div class="buttons-container">
+                <button class="btn btn-yes" onclick="sheSaidYes()">Yes, I forgive you 💕</button>
+                <button class="btn btn-no" id="noBtn">No 😢</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 7: Celebration -->
+    <div class="screen" id="screen-7">
+        <div class="confetti-container" id="confettiContainer"></div>
+        <div class="celebration-container">
+            <div class="big-heart">💕</div>
+            <h2>Thank You, Beiby</h2>
+            <p>
+                You just made me the happiest person in the world. 
+                I promise I won't let you down again.
+            </p>
+            <p>
+                You're my everything, and I'll spend every day showing you that.
+            </p>
+            <p>
+                I love you more than words can say, and more than games, 
+                more than anything in this world.
+            </p>
+            <p class="signature">Forever yours, your boyfriend who loves you endlessly 💕</p>
+        </div>
+    </div>
+
+    <!-- Reading Timer -->
+    <div class="reading-timer" id="readingTimer">
+        <span class="timer-icon">⏱️</span>
+        <span class="timer-text" id="timerText">60s</span>
+    </div>
+
+    <!-- Navigation -->
+    <button class="nav-btn prev" id="prevBtn" onclick="prevScreen()" style="display:none;">← Back</button>
+    <button class="nav-btn next" id="nextBtn" onclick="nextScreen()">Next →</button>
+
+    <script>
+        let currentScreen = 1;
+        const totalScreens = 7;
+        let readingTimer = null;
+        let readingTimeLeft = 60; // 60 seconds per page
+        const screensWithTimer = [2, 3, 4, 5]; // Pages that need the timer
+
+        // Reading timer functions
+        function startReadingTimer() {
+            readingTimeLeft = 60;
+            const timerEl = document.getElementById('readingTimer');
+            const timerText = document.getElementById('timerText');
+            
+            timerEl.classList.add('active');
+            timerText.textContent = readingTimeLeft + 's';
+            
+            if (readingTimer) clearInterval(readingTimer);
+            
+            readingTimer = setInterval(() => {
+                readingTimeLeft--;
+                timerText.textContent = readingTimeLeft + 's';
+                
+                if (readingTimeLeft <= 0) {
+                    clearInterval(readingTimer);
+                    timerEl.classList.remove('active');
+                    nextScreen();
+                }
+            }, 1000);
+        }
+
+        function stopReadingTimer() {
+            if (readingTimer) {
+                clearInterval(readingTimer);
+                readingTimer = null;
+            }
+            document.getElementById('readingTimer').classList.remove('active');
+        }
+
+        // Create floating hearts
+        function createFloatingHearts() {
+            const container = document.getElementById('heartsBg');
+            const hearts = ['💕', '💗', '💖', '💝', '💘', '❤️', '💜', '💙'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                heart.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                container.appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 8000);
+            }, 800);
+        }
+
+        // Screen navigation
+        function showScreen(num) {
+            stopReadingTimer();
+            
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(`screen-${num}`).classList.add('active');
+            currentScreen = num;
+
+            // Update navigation buttons
+            document.getElementById('prevBtn').style.display = num > 1 && num < 6 ? 'block' : 'none';
+            document.getElementById('nextBtn').style.display = num < 6 ? 'block' : 'none';
+
+            // Animate elements on screen 3, 4, and 5
+            if (num === 3) animatePhotos();
+            if (num === 4) animateMemories();
+            if (num === 5) animatePromises();
+
+            // Start reading timer on content screens
+            if (screensWithTimer.includes(num)) {
+                setTimeout(() => startReadingTimer(), 500);
+            }
+        }
+
+        function nextScreen() {
+            if (currentScreen < totalScreens) {
+                showScreen(currentScreen + 1);
+            }
+        }
+
+        function prevScreen() {
+            if (currentScreen > 1) {
+                showScreen(currentScreen - 1);
+            }
+        }
+
+        // Animate photos
+        function animatePhotos() {
+            const items = document.querySelectorAll('.photo-card');
+            items.forEach((item, i) => {
+                setTimeout(() => item.classList.add('visible'), i * 200);
+            });
+        }
+
+        // Animate memories
+        function animateMemories() {
+            const items = document.querySelectorAll('.memory-item');
+            items.forEach((item, i) => {
+                setTimeout(() => item.classList.add('visible'), i * 200);
+            });
+        }
+
+        // Animate promises
+        function animatePromises() {
+            const items = document.querySelectorAll('.promise-list li');
+            items.forEach((item, i) => {
+                setTimeout(() => item.classList.add('visible'), i * 150);
+            });
+        }
+
+        // No button dodge effect
+        const noBtn = document.getElementById('noBtn');
+        noBtn.addEventListener('mouseenter', function() {
+            const x = Math.random() * (window.innerWidth - 200);
+            const y = Math.random() * (window.innerHeight - 100);
+            this.style.position = 'fixed';
+            this.style.left = x + 'px';
+            this.style.top = y + 'px';
+        });
+
+        noBtn.addEventListener('click', function() {
+            this.textContent = 'Are you sure? 🥺';
+            const x = Math.random() * (window.innerWidth - 200);
+            const y = Math.random() * (window.innerHeight - 100);
+            this.style.position = 'fixed';
+            this.style.left = x + 'px';
+            this.style.top = y + 'px';
+        });
+
+        // Lightbox
+        function openLightbox(src) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightboxImg');
+            img.src = src;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        // She said yes!
+        function sheSaidYes() {
+            showScreen(7);
+            createConfetti();
+            
+            // Create lots of floating hearts
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-heart';
+                    heart.textContent = '💕';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                    heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                    document.getElementById('heartsBg').appendChild(heart);
+                }, i * 100);
+            }
+        }
+
+        // Confetti effect
+        function createConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#ff6b9d', '#c44569', '#ff85a2', '#f78fb3', '#fcb4d5', '#ffffff', '#ffd700', '#ff69b4'];
+            
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    container.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 50);
+            }
+        }
+
+        // Initialize
+        createFloatingHearts();
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextScreen();
+            if (e.key === 'ArrowLeft') prevScreen();
+        });
+
+        // Touch swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextScreen(); // Swipe left
+                } else {
+                    prevScreen(); // Swipe right
+                }
+            }
+        }
+    </script>
+</body>
+</html>
