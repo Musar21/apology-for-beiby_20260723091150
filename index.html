@@ -440,36 +440,6 @@
             50% { transform: translateY(-5px); }
         }
 
-        /* Reading Timer */
-        .reading-timer {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 107, 157, 0.2);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 107, 157, 0.4);
-            border-radius: 50px;
-            padding: 10px 20px;
-            color: #ff6b9d;
-            font-size: 14px;
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .reading-timer.active {
-            display: flex;
-        }
-
-        .reading-timer .timer-icon {
-            font-size: 18px;
-        }
-
-        .reading-timer .timer-text {
-            font-weight: 600;
-        }
-
         /* Screen 6: The Question */
         #screen-6 {
             background: linear-gradient(180deg, #0a0a1a 0%, #1a0a2e 50%, #0a0a1a 100%);
@@ -961,40 +931,6 @@
     <script>
         let currentScreen = 1;
         const totalScreens = 7;
-        let readingTimer = null;
-        let readingTimeLeft = 60; // 60 seconds per page
-        const screensWithTimer = [2, 3, 4, 5]; // Pages that need the timer
-
-        // Reading timer functions
-        function startReadingTimer() {
-            readingTimeLeft = 60;
-            const timerEl = document.getElementById('readingTimer');
-            const timerText = document.getElementById('timerText');
-            
-            timerEl.classList.add('active');
-            timerText.textContent = readingTimeLeft + 's';
-            
-            if (readingTimer) clearInterval(readingTimer);
-            
-            readingTimer = setInterval(() => {
-                readingTimeLeft--;
-                timerText.textContent = readingTimeLeft + 's';
-                
-                if (readingTimeLeft <= 0) {
-                    clearInterval(readingTimer);
-                    timerEl.classList.remove('active');
-                    nextScreen();
-                }
-            }, 1000);
-        }
-
-        function stopReadingTimer() {
-            if (readingTimer) {
-                clearInterval(readingTimer);
-                readingTimer = null;
-            }
-            document.getElementById('readingTimer').classList.remove('active');
-        }
 
         // Create floating hearts
         function createFloatingHearts() {
@@ -1016,8 +952,6 @@
 
         // Screen navigation
         function showScreen(num) {
-            stopReadingTimer();
-            
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(`screen-${num}`).classList.add('active');
             currentScreen = num;
@@ -1030,11 +964,6 @@
             if (num === 3) animatePhotos();
             if (num === 4) animateMemories();
             if (num === 5) animatePromises();
-
-            // Start reading timer on content screens
-            if (screensWithTimer.includes(num)) {
-                setTimeout(() => startReadingTimer(), 500);
-            }
         }
 
         function nextScreen() {
